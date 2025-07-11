@@ -37,9 +37,9 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 px-4 py-4 space-y-3">
-          <a href="#hero" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Home</a>
-          <a href="#services" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Services</a>
-          <a href="#contact" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Contact</a>
+          <a href="/#hero" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Home</a>
+          <a href="/#services" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Services</a>
+          <a href="/#contact" className="block text-[#1A1A1A] hover:text-[#00B4D8]">Contact</a>
         </div>
       )}
     </header>
