@@ -80,19 +80,29 @@ export default function ServicesAutoCarousel() {
   const [activeModal, setActiveModal] = useState<Service | null>(null);
 
   useEffect(() => {
-    const scroll = () => {
-      if (!isHovered && scrollRef.current) {
-        scrollRef.current.scrollLeft += 1;
-        const maxScroll = scrollRef.current.scrollWidth / 2;
-        if (scrollRef.current.scrollLeft >= maxScroll) {
-          scrollRef.current.scrollLeft = 0;
-        }
-      }
-    };
+  const container = scrollRef.current;
+  if (!container) return;
 
-    const interval = setInterval(scroll, 20);
-    return () => clearInterval(interval);
-  }, [isHovered]);
+  let animationFrameId: number;
+
+  const scroll = () => {
+    if (!isHovered && container) {
+      container.scrollLeft += 1;
+
+      // Reset scroll when reaching half of the total width (after looping)
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      }
+
+      animationFrameId = requestAnimationFrame(scroll);
+    }
+  };
+
+  animationFrameId = requestAnimationFrame(scroll);
+
+  return () => cancelAnimationFrame(animationFrameId);
+}, [isHovered]);
+
 
   return (
     <section id="services" className="py-20 bg-[#F9FAFB]">
@@ -104,7 +114,7 @@ export default function ServicesAutoCarousel() {
         ref={scrollRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="flex gap-6 overflow-x-auto px-6 scrollbar-hide scroll-smooth"
+        className="flex gap-6 overflow-x-auto px-6 scrollbar-hide scroll-smooth whitespace-nowrap"
       >
         {loopedServices.map((service, index) => (
           <div
