@@ -71,68 +71,70 @@ const services: Service[] = [
   },
 ];
 
-const loopedServices = [...services, ...services];
-
 export default function ServicesAutoCarousel() {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const trackRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [activeModal, setActiveModal] = useState<Service | null>(null);
+  const scrollX = useRef(0);
 
   useEffect(() => {
-  const container = scrollRef.current;
-  if (!container) return;
+    const track = trackRef.current;
+    if (!track) return;
 
-  let animationFrameId: number;
+    let animationId: number;
 
-  const scroll = () => {
-    if (!isHovered && container) {
-      container.scrollLeft += 1;
-
-      // Reset scroll when reaching half of the total width (after looping)
-      if (container.scrollLeft >= container.scrollWidth / 2) {
-        container.scrollLeft = 0;
+    const step = () => {
+      if (!isHovered) {
+        scrollX.current -= 0.5;
+        if (track.scrollWidth / 2 + scrollX.current <= 0) {
+          scrollX.current = 0;
+        }
+        track.style.transform = `translateX(${scrollX.current}px)`;
       }
+      animationId = requestAnimationFrame(step);
+    };
 
-      animationFrameId = requestAnimationFrame(scroll);
-    }
-  };
-
-  animationFrameId = requestAnimationFrame(scroll);
-
-  return () => cancelAnimationFrame(animationFrameId);
-}, [isHovered]);
-
+    animationId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationId);
+  }, [isHovered]);
 
   return (
-    <section id="services" className="py-20 bg-[#F9FAFB]">
+    <section id="services" className="py-20 bg-[#F9FAFB] overflow-hidden">
       <h2 className="text-center text-3xl font-bold text-[#0B3B60] mb-10">
         Explore Our Services
       </h2>
 
       <div
-        ref={scrollRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="flex gap-6 overflow-x-auto px-6 scrollbar-hide scroll-smooth whitespace-nowrap"
+        className="relative overflow-hidden px-6"
       >
-        {loopedServices.map((service, index) => (
-          <div
-            key={index}
-            onClick={() => setActiveModal(service)}
-            className="relative w-52 h-72 rounded-xl flex-shrink-0 cursor-pointer overflow-hidden shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl group"
-          >
+        <div
+          ref={trackRef}
+          className="flex gap-6 whitespace-nowrap will-change-transform"
+          style={{
+            width: "fit-content",
+          }}
+        >
+          {[...services, ...services].map((service, index) => (
             <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${service.icon})` }}
-            />
-            <div className="absolute inset-0 bg-black/60 group-hover:bg-black/70 transition-all duration-300" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-2">
-              <p className="text-lg font-bold drop-shadow-md">{service.title}</p>
-              <p className="text-sm text-gray-200 drop-shadow-sm">{service.subtitle}</p>
+              key={index}
+              onClick={() => setActiveModal(service)}
+              className="relative w-52 h-72 rounded-xl flex-shrink-0 cursor-pointer overflow-hidden shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${service.icon})` }}
+              />
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/70 transition-all duration-300" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-2">
+                <p className="text-lg font-bold drop-shadow-md">{service.title}</p>
+                <p className="text-sm text-gray-200 drop-shadow-sm">{service.subtitle}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Modal */}
