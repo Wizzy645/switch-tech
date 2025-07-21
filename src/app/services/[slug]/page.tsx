@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import OverlappingCircles from "@/components/OverlappingCircles";
 
 export default function ServiceDetails() {
   const router = useRouter();
@@ -539,74 +540,79 @@ if (slug === "digital") {
   );
 }
 
-  if (slug === "infrastructure") {
+ if (slug === "infrastructure") {
   return (
     <>
-        <Navbar />
-    <section className="min-h-screen bg-[#F9FAFB]">
-      {/* Hero */}
-      <div className="relative h-[65vh] w-full">
-        <Image
-          src="/infrastructure.jpg"
-          alt="Infrastructure"
-          layout="fill"
-          objectFit="cover"
-          className="object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/70 flex items-center justify-center">
-          <div className="text-white text-center px-6">
-            <h1 className="text-5xl font-extrabold drop-shadow">Infrastructure Development</h1>
-            <p className="mt-3 text-lg text-white/80">
-              Sustainable growth, engineered through strategic infrastructure delivery.
-            </p>
+      <Navbar />
+      <section className="min-h-screen bg-[#F9FAFB]">
+        {/* Hero */}
+        <div className="relative h-[65vh] w-full">
+          <Image
+            src="/infrastructure.jpg"
+            alt="Infrastructure"
+            layout="fill"
+            objectFit="cover"
+            className="object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/70 flex items-center justify-center">
+            <div className="text-white text-center px-6">
+              <h1 className="text-5xl font-extrabold drop-shadow">Infrastructure Development</h1>
+              <p className="mt-3 text-lg text-white/80">
+                Sustainable growth, engineered through strategic infrastructure delivery.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="py-20 px-4 sm:px-8 max-w-6xl mx-auto">
-        <p className="text-gray-700 mb-6">
-          Infrastructure is at the core of Africa&apos;s transformation. Our role at Swich is to drive it with precision and integrity.
-        </p>
-        <h2 className="text-2xl font-bold text-[#0B3B60] mb-4">Our Focus Areas</h2>
-       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-gray-700">
-  {[
-    {
-      label: "Residential & Commercial",
-      icon: <Building2 size={32} className="mx-auto text-[#0B3B60]" />,
-      desc: "From private housing to office complexes, we design and develop spaces that are functional, modern, and built to last. Our projects meet safety codes and community needs.",
-    },
-    {
-      label: "Road Construction",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto text-[#0B3B60]" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 20h16M4 4h16M12 4v16" />
-        </svg>
-      ),
-      desc: "We build durable, high-traffic roads using sustainable materials and engineering methods that withstand African terrain and improve mobility and commerce.",
-    },
-    {
-      label: "Bridge Construction",
-      icon: <Landmark size={32} className="mx-auto text-[#0B3B60]" />,
-      desc: "Our bridge solutions connect cities and regions — ensuring safe, efficient transit over rivers, valleys, and difficult landscapes. Precision and durability are our priority.",
-    },
-  ].map((item, i) => (
-    <div
-      key={i}
-      className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-    >
-      <div>{item.icon}</div>
-      <p className="mt-4 font-semibold text-[#0077A3]">{item.label}</p>
-      <p className="text-sm mt-2 text-gray-600">{item.desc}</p>
-    </div>
-  ))}
-</div>
-</div>
-    </section>
-     <Footer />
-      </>
+        {/* Content */}
+        <div className="py-20 px-4 sm:px-8 max-w-6xl mx-auto">
+          <p className="text-gray-700 mb-6">
+            Infrastructure is at the core of Africa&apos;s transformation. Our role at Swich is to drive it with precision and integrity.
+          </p>
+
+          <h2 className="text-2xl font-bold text-[#0B3B60] mb-4">Our Focus Areas</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-gray-700 mb-16">
+            {[
+              {
+                label: "Residential & Commercial",
+                icon: <Building2 size={32} className="mx-auto text-[#0B3B60]" />,
+                desc: "From private housing to office complexes, we design and develop spaces that are functional, modern, and built to last. Our projects meet safety codes and community needs.",
+              },
+              {
+                label: "Road Construction",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto text-[#0B3B60]" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 20h16M4 4h16M12 4v16" />
+                  </svg>
+                ),
+                desc: "We build durable, high-traffic roads using sustainable materials and engineering methods that withstand African terrain and improve mobility and commerce.",
+              },
+              {
+                label: "Bridge Construction",
+                icon: <Landmark size={32} className="mx-auto text-[#0B3B60]" />,
+                desc: "Our bridge solutions connect cities and regions — ensuring safe, efficient transit over rivers, valleys, and difficult landscapes. Precision and durability are our priority.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <div>{item.icon}</div>
+                <p className="mt-4 font-semibold text-[#0077A3]">{item.label}</p>
+                <p className="text-sm mt-2 text-gray-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Overlapping Image Design */}
+          <OverlappingCircles />
+        </div>
+      </section>
+      <Footer />
+    </>
   );
 }
+
 
   if (slug === "engineering") {
   return (
